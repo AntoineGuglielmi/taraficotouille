@@ -23,7 +23,7 @@ export default function AddEntryForm({ className }: AddEntryFormProps) {
       <input
         type="text"
         name="entry"
-        placeholder="Crapeniguedouille"
+        placeholder="Inventer un mot..."
         className="bg-amber-500 shadow-[0_0_1rem_0_rgba(0,0,0,0.75)] text-white text-2xl placeholder:text-white/75 px-4 py-2 rounded-md w-full font-cute"
       />
       <button

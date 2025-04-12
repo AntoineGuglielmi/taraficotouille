@@ -2,7 +2,7 @@
 
 :root {
   --background: #ffffff;
-  --foreground: #171717;
+  --foreground: var(--color-gray-700);
 }
 
 @theme inline {
@@ -21,4 +21,11 @@
   font-family: var(--font-vibur);
   font-size: var(--text-3xl);
   line-height: 1;
+}
+
+@utility input-field {
+  box-shadow: 0 0 1rem rgba(0, 0, 0, 0.75);
+  padding: 0.5rem 1rem;
+  border-radius: var(--radius-md);
+  width: 100%;
 }
