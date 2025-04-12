@@ -6,7 +6,7 @@ type HeaderProps = {
 export default function Header({ className }: HeaderProps) {
   return (
     <header
-      className={`py-36 flex flex-col gap-8 items-center justify-center ${className}`}
+      className={`py-30 flex flex-col gap-8 items-center justify-center ${className}`}
     >
       <h1 className="typeface-title-main text-white">Taraficotouille</h1>
       <h2 className="text-white text-center max-w-prose font-[600] text-2xl">

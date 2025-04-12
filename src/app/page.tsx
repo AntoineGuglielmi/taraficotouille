@@ -1,11 +1,11 @@
 import AddEntryForm from '@/components/molecules/add-entry-form'
-// import { getAllEntries } from '@/services/ServiceEntries'
+import EntriesList from '@/components/molecules/entries-list'
 
-export default async function Home() {
-  // const entries = await getAllEntries()
+export default function Home() {
   return (
-    <main>
+    <main className="flex flex-col gap-30 items-center">
       <AddEntryForm />
+      <EntriesList />
     </main>
   )
 }

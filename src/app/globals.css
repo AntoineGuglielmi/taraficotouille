@@ -17,7 +17,8 @@
   font-size: var(--text-7xl);
 }
 
-@utility typeface-entry {
+@utility typeface-entry-title {
   font-family: var(--font-vibur);
   font-size: var(--text-3xl);
+  line-height: 1;
 }

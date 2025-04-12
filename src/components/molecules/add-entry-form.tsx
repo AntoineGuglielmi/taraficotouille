@@ -18,7 +18,7 @@ export default function AddEntryForm({ className }: AddEntryFormProps) {
   return (
     <Form
       action={submitForm}
-      className={`max-w-prose mx-auto flex flex-col gap-4 ${className}`}
+      className={`w-full max-w-prose mx-auto flex flex-col gap-4 ${className}`}
     >
       <input
         type="text"
