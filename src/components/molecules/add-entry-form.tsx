@@ -1,3 +1,5 @@
+import { createEntry } from '@/services/ServiceEntries'
+import { revalidatePath } from 'next/cache'
 import Form from 'next/form'
 
 type AddEntryFormProps = {
@@ -8,9 +10,9 @@ type AddEntryFormProps = {
 export default function AddEntryForm({ className }: AddEntryFormProps) {
   const submitForm = async (formData: FormData) => {
     'use server'
-    console.log('Form submitted:', formData)
-    // You can access form data using formData.get('fieldName')
-    // Perform any necessary actions, such as saving data to a database
+    const title = formData.get('entry') as string
+    await createEntry({ title })
+    revalidatePath('/')
   }
 
   return (
