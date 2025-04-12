@@ -1,7 +1,7 @@
 import { rawToRefined } from '@/adapters/AdapterEntries'
 import { TypeEntryRaw } from '@/types/TypeEntryRaw'
 import { TypeEntryRefined } from '@/types/TypeEntryRefined'
-import { Client, Databases, ID } from 'node-appwrite'
+import { Client, Databases, ID, Query } from 'node-appwrite'
 
 const client = new Client()
 
@@ -48,6 +48,25 @@ export const getAllEntries = async () => {
     const response = await databases.listDocuments(
       AW_DATABASE_ID!,
       AW_COLLECTION_ENTRIES_ID!,
+    )
+    const documents = (response.documents as TypeEntryRaw[]).map(
+      (doc: TypeEntryRaw) => {
+        return rawToRefined(doc)
+      },
+    )
+    return documents
+  } catch (error) {
+    console.error('Error fetching entries:', error)
+    throw error
+  }
+}
+
+export const getEntryBySearch = async ({ search }: { search: string }) => {
+  try {
+    const response = await databases.listDocuments(
+      AW_DATABASE_ID!,
+      AW_COLLECTION_ENTRIES_ID!,
+      search ? [Query.contains('title', search)] : [],
     )
     const documents = (response.documents as TypeEntryRaw[]).map(
       (doc: TypeEntryRaw) => {

@@ -28,7 +28,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${nunito.variable} ${vibur.variable} antialiased min-h-[100svh] px-4 bg-amber-500 bg-[url('/bg/bg-kid-space.svg')] bg-center bg-size-[300px] bg-repeat font-body`}
+        className={`${nunito.variable} ${vibur.variable} antialiased min-h-[100svh] px-4 pb-30 bg-amber-500 bg-[url('/bg/bg-kid-space.svg')] bg-[center_-20px] bg-size-[300px] bg-repeat font-body`}
       >
         <Header />
         {children}
