@@ -1,5 +1,6 @@
 import { Vibur, Nunito } from 'next/font/google'
 import './globals.css'
+import BgColor from '@/components/atoms/bg-color'
 
 const nunito = Nunito({
   variable: '--font-nunito',
@@ -21,8 +22,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${nunito.variable} ${vibur.variable} antialiased min-h-[100svh] px-4 pb-30 bg-amber-500 bg-[url('/bg/bg-kid-space.svg')] bg-[center_-20px] bg-size-[300px] bg-repeat font-body`}
+        className={`${nunito.variable} ${vibur.variable} antialiased min-h-[100svh] px-4 pb-30 font-body relative`}
       >
+        <BgColor />
         {children}
       </body>
     </html>
