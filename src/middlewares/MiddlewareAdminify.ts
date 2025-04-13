@@ -1,4 +1,4 @@
-import { userAvailable } from '@/services/ServiceUsers'
+import { getUserById } from '@/services/ServiceUsers'
 import { cookies } from 'next/headers'
 import { NextRequest, NextResponse } from 'next/server'
 
@@ -10,12 +10,10 @@ export async function MiddlewareAdminify(request: NextRequest) {
 
   const cookiesStore = await cookies()
 
-  const userType = await userAvailable({
-    id,
-  })
+  const user = await getUserById({ id })
 
-  if (userType) {
-    cookiesStore.set('TARAFICOTOUILLE_USER', userType)
+  if (user) {
+    cookiesStore.set('TARAFICOTOUILLE_USER_ID', user.$id)
   }
 
   return NextResponse.redirect(new URL('/', request.url))

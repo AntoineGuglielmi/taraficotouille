@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+import { getUserType } from './actions'
 
 type CookieCheckerProps = {
   children?: React.ReactNode
@@ -13,20 +14,27 @@ export default function CookieCheckerClient({
   showIf = [],
   hideIf = [],
 }: CookieCheckerProps) {
-  const [user, setUser] = useState<string | null>(null)
+  const [isAllowed, setIsAllowed] = useState<boolean>(false)
 
   useEffect(() => {
-    const cookies = document.cookie
-    const match = cookies.match(/TARAFICOTOUILLE_USER=([^;]+)/)
-    const value = match?.[1] ?? ''
-    setUser(value)
+    const fetchUserType = async () => {
+      const cookies = document.cookie
+      const match = cookies.match(/TARAFICOTOUILLE_USER_ID=([^;]+)/)
+      const id = match?.[1] ?? ''
+
+      if (!id) return
+
+      try {
+        const userType = (await getUserType({ id })) ?? ''
+        setIsAllowed(showIf.includes(userType) && !hideIf.includes(userType))
+      } catch {}
+    }
+    fetchUserType()
   }, [])
 
-  if (!user) return null
+  if (!isAllowed) return null
 
-  if (showIf.includes(user) && !hideIf.includes(user)) {
-    return <>{children}</>
-  }
+  return <>{children}</>
 
   return null
 }

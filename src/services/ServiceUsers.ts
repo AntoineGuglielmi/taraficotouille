@@ -50,3 +50,15 @@ export const getAvailableUsers = async () => {
     return availableUsers
   } catch {}
 }
+
+export const getUserById = async ({ id }: { id: string }) => {
+  try {
+    const response = await databases.listDocuments(
+      AW_DATABASE_ID!,
+      AW_USERS_COLLECTION_ID!,
+      [Query.equal('$id', id)],
+    )
+    const user = response.documents[0]
+    return user
+  } catch {}
+}
