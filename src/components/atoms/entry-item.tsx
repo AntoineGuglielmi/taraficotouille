@@ -20,7 +20,7 @@ export default function EntryItem({ className, entry }: EntryItemProps) {
       <header className="flex justify-between items-center">
         <h3 className="typeface-entry-title text-amber-500">{title}</h3>
 
-        <CookieChecker showIf={['admin']}>
+        <CookieChecker showIf={['admin', 'writer']}>
           <Link href={`/entry/${id}`}>
             <Pencil />
           </Link>

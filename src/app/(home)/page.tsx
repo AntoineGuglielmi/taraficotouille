@@ -8,7 +8,7 @@ export default async function Home() {
 
   return (
     <>
-      <CookieChecker showIf={['admin']}>
+      <CookieChecker showIf={['admin', 'writer']}>
         <AddEntryForm />
       </CookieChecker>
       <EntriesList entries={entries} />

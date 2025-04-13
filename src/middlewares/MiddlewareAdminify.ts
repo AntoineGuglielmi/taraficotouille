@@ -7,17 +7,16 @@ export async function MiddlewareAdminify(request: NextRequest) {
   const regex = /^\/adminify\/([^/]+)$/
   const match = pathname.match(regex)
   const id = match ? match[1] : ''
-  console.log({
+
+  const cookiesStore = await cookies()
+
+  const userType = await userAvailable({
     id,
   })
 
-  const cookiesStore = await cookies()
-  const isUserAvailable = await userAvailable({
-    type: 'admin',
-    id,
-  })
-  if (isUserAvailable) {
-    cookiesStore.set('TARAFICOTOUILLE_USER', 'admin')
+  if (userType) {
+    cookiesStore.set('TARAFICOTOUILLE_USER', userType)
   }
+
   return NextResponse.redirect(new URL('/', request.url))
 }
