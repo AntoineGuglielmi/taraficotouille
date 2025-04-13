@@ -7,9 +7,7 @@ type AdminNavProps = {
 export default function AdminNav({ className }: AdminNavProps) {
   const handleAddUser = async () => {
     const test = await fetch('/api/adminify').then((res) => res.json())
-    console.log({
-      test,
-    })
+    alert(test.message)
   }
 
   return (
