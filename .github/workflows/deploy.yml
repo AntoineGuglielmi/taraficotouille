@@ -1,0 +1,33 @@
+name: Deploy to cPanel
+
+on:
+  push:
+    tags:
+      - '*'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Install Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '20.11.0' # ou la version nécessaire pour ton projet
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build project
+        run: npm run build
+
+      - name: Deploy to cPanel via FTP
+        uses: SamKirkland/FTP-Deploy-Action@4.3.1
+        with:
+          server: ${{ secrets.FTP_SERVER }} # Adresse de ton serveur cPanel
+          username: ${{ secrets.FTP_USERNAME }} # Nom d'utilisateur FTP
+          password: ${{ secrets.FTP_PASSWORD }} # Mot de passe FTP
+          server-dir: /taraficotouille.antoine-g.com/ # Chemin sur le serveur cPanel où déployer
