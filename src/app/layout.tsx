@@ -1,6 +1,7 @@
 import { Vibur, Nunito } from 'next/font/google'
 import './globals.css'
 import BgColor from '@/components/atoms/bg-color'
+import { Metadata } from 'next'
 
 const nunito = Nunito({
   variable: '--font-nunito',
@@ -13,6 +14,11 @@ const vibur = Vibur({
   weight: ['400'],
   subsets: ['latin'],
 })
+
+export const metadata: Metadata = {
+  title: 'Taraficotouille',
+  description: 'Un dictionnaire qui rassemble tous les mots inventés par Léo',
+}
 
 export default function RootLayout({
   children,
