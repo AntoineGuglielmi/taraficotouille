@@ -1,16 +1,23 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
-import { testMiddleware } from './middlewares/test'
+import { MiddlewareAdminify } from './middlewares/MiddlewareAdminify'
+import { MiddlewarePermission } from './middlewares/MiddlewarePermission'
 
 // This function can be marked `async` if using `await` inside
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl
 
+  if (pathname.startsWith('/adminify')) {
+    const middleAdminify = await MiddlewareAdminify(request)
+    if (middleAdminify !== NextResponse.next()) {
+      return middleAdminify
+    }
+  }
+
   if (pathname.startsWith('/entry')) {
-    const testMW = await testMiddleware(request)
-    if (testMW !== NextResponse.next()) {
-      return testMW
+    const middlewarePermission = await MiddlewarePermission(request)
+    if (middlewarePermission !== NextResponse.next()) {
+      return middlewarePermission
     }
   }
 
