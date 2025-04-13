@@ -10,6 +10,9 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
+      AW_ENDPOINT: ${{ secrets.AW_ENDPOINT }} # Une clé API sécurisée
+      AW_PROJECT_ID: ${{ secrets.AW_PROJECT_ID }} # Une clé API sécurisée
+      AW_SECRET_KEY: ${{ secrets.AW_SECRET_KEY }} # Une clé API sécurisée
       AW_DATABASE_ID: ${{ secrets.AW_DATABASE_ID }} # Une clé API sécurisée
       AW_ENTRIES_COLLECTION_ID: ${{ secrets.AW_ENTRIES_COLLECTION_ID }} # Une clé API sécurisée
       AW_USERS_COLLECTION_ID: ${{ secrets.AW_USERS_COLLECTION_ID }} # Une clé API sécurisée
