@@ -1,19 +1,32 @@
-import { cookies } from 'next/headers'
+'use client'
+
+import { useEffect, useState } from 'react'
 
 type CookieCheckerProps = {
-  className?: string
   children?: React.ReactNode
   showIf?: Array<string>
   hideIf?: Array<string>
 }
 
-export default async function CookieChecker({
-  //   className,
+export default function CookieCheckerClient({
   children,
   showIf = [],
   hideIf = [],
 }: CookieCheckerProps) {
-  const cookiesStore = await cookies()
-  const user = cookiesStore.get('TARAFICOTOUILLE_USER')?.value || ''
-  return <>{showIf?.includes(user) && !hideIf?.includes(user) && children}</>
+  const [user, setUser] = useState<string | null>(null)
+
+  useEffect(() => {
+    const cookies = document.cookie
+    const match = cookies.match(/TARAFICOTOUILLE_USER=([^;]+)/)
+    const value = match?.[1] ?? ''
+    setUser(value)
+  }, [])
+
+  if (!user) return null
+
+  if (showIf.includes(user) && !hideIf.includes(user)) {
+    return <>{children}</>
+  }
+
+  return null
 }

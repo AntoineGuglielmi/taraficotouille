@@ -9,9 +9,8 @@ export default async function Home() {
   return (
     <>
       <CookieChecker showIf={['admin']}>
-        <p className="bg-red-500 p-4 text-2xl">Hello :)</p>
+        <AddEntryForm />
       </CookieChecker>
-      <AddEntryForm />
       <EntriesList entries={entries} />
     </>
   )
