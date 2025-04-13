@@ -1,24 +1,10 @@
 import { rawToRefined } from '@/adapters/AdapterEntries'
 import { TypeEntryRaw } from '@/types/TypeEntryRaw'
 import { TypeEntryRefined } from '@/types/TypeEntryRefined'
-import { Client, Databases, ID, Query } from 'node-appwrite'
+import { ID, Query } from 'node-appwrite'
+import { databases } from './init'
 
-const client = new Client()
-
-const {
-  AW_ENDPOINT,
-  AW_PROJECT_ID,
-  AW_SECRET_KEY,
-  AW_DATABASE_ID,
-  AW_COLLECTION_ENTRIES_ID,
-} = process.env
-
-client
-  .setEndpoint(AW_ENDPOINT!)
-  .setProject(AW_PROJECT_ID!)
-  .setKey(AW_SECRET_KEY!)
-
-const databases = new Databases(client)
+const { AW_DATABASE_ID, AW_ENTRIES_COLLECTION_ID } = process.env
 
 export const createEntry = async ({
   title,
@@ -32,7 +18,7 @@ export const createEntry = async ({
   try {
     const response = await databases.createDocument(
       AW_DATABASE_ID!,
-      AW_COLLECTION_ENTRIES_ID!,
+      AW_ENTRIES_COLLECTION_ID!,
       ID.unique(),
       entry,
     )
@@ -47,7 +33,7 @@ export const getAllEntries = async () => {
   try {
     const response = await databases.listDocuments(
       AW_DATABASE_ID!,
-      AW_COLLECTION_ENTRIES_ID!,
+      AW_ENTRIES_COLLECTION_ID!,
       [Query.orderDesc('$createdAt')],
     )
     const documents = (response.documents as TypeEntryRaw[]).map(
@@ -66,7 +52,7 @@ export const getEntryBySearch = async ({ search }: { search: string }) => {
   try {
     const response = await databases.listDocuments(
       AW_DATABASE_ID!,
-      AW_COLLECTION_ENTRIES_ID!,
+      AW_ENTRIES_COLLECTION_ID!,
       [
         Query.orderDesc(`$createdAt`),
         ...(search
@@ -95,7 +81,7 @@ export const getEntryById = async ({ id }: { id: string }) => {
   try {
     const response = await databases.getDocument(
       AW_DATABASE_ID!,
-      AW_COLLECTION_ENTRIES_ID!,
+      AW_ENTRIES_COLLECTION_ID!,
       id,
     )
     const document = rawToRefined(response as TypeEntryRaw)
@@ -123,7 +109,7 @@ export const updateEntry = async ({
   try {
     const response = await databases.updateDocument(
       AW_DATABASE_ID!,
-      AW_COLLECTION_ENTRIES_ID!,
+      AW_ENTRIES_COLLECTION_ID!,
       id,
       entry,
     )
@@ -138,7 +124,7 @@ export const deleteEntry = async ({ id }: { id: TypeEntryRefined['id'] }) => {
   try {
     const response = await databases.deleteDocument(
       AW_DATABASE_ID!,
-      AW_COLLECTION_ENTRIES_ID!,
+      AW_ENTRIES_COLLECTION_ID!,
       id,
     )
     return response
