@@ -63,9 +63,6 @@ export const getAllEntries = async () => {
 }
 
 export const getEntryBySearch = async ({ search }: { search: string }) => {
-  console.log({
-    search,
-  })
   try {
     const response = await databases.listDocuments(
       AW_DATABASE_ID!,
@@ -87,10 +84,6 @@ export const getEntryBySearch = async ({ search }: { search: string }) => {
         return rawToRefined(doc)
       },
     )
-    console.log({
-      documents,
-      search,
-    })
     return documents
   } catch (error) {
     console.error('Error fetching entries:', error)
@@ -126,12 +119,6 @@ export const updateEntry = async ({
     ...(title !== undefined ? { title } : {}),
     ...(definition !== undefined ? { definition } : {}),
   }
-  console.log({
-    id,
-    title,
-    definition,
-    entry,
-  })
 
   try {
     const response = await databases.updateDocument(

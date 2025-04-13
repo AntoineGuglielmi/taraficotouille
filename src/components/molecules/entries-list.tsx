@@ -9,31 +9,28 @@ import useDebounce from '@/hooks/useDebounce'
 type EntriesListProps = {
   className?: string
   children?: React.ReactNode
+  entries: TypeEntryRefined[]
 }
 
-export default function EntriesList({ className }: EntriesListProps) {
-  const [entries, setEntries] = useState<TypeEntryRefined[]>([])
+export default function EntriesList({ className, entries }: EntriesListProps) {
+  // const [entries, setEntries] = useState<TypeEntryRefined[]>([])
   const [search, setSearch] = useState<string>('')
+  const [filteredEntries, setFilteredEntries] =
+    useState<TypeEntryRefined[]>(entries)
 
   const debouncedSearch = useDebounce(search, 500)
 
   const fetchFiltered = async () => {
-    if (debouncedSearch.trim() === '') {
-      const res = await fetch('/api/entries')
-      const data = await res.json()
-      setEntries(data)
-    } else {
-      const res = await fetch(
-        `/api/entries?search=${encodeURIComponent(debouncedSearch)}`,
-      )
-      const data = await res.json()
-      setEntries(data)
-    }
+    const res = await fetch(
+      `/api/entries?search=${encodeURIComponent(debouncedSearch)}`,
+    )
+    const data = await res.json()
+    setFilteredEntries(data)
   }
 
   useEffect(() => {
     fetchFiltered()
-  }, [debouncedSearch])
+  }, [debouncedSearch, entries])
 
   return (
     <section className={`w-full max-w-prose flex flex-col gap-4 ${className}`}>
@@ -44,7 +41,7 @@ export default function EntriesList({ className }: EntriesListProps) {
         placeholder="Chercher un mot ou une définition..."
       />
       <ul className="w-full flex flex-col gap-4">
-        {entries.map((entry) => (
+        {filteredEntries.map((entry) => (
           <li key={entry.id}>
             <EntryItem entry={entry} />
           </li>

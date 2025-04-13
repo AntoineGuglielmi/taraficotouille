@@ -1,4 +1,5 @@
 import { createEntry } from '@/services/ServiceEntries'
+import { revalidatePath } from 'next/cache'
 import Form from 'next/form'
 
 type AddEntryFormProps = {
@@ -11,6 +12,7 @@ export default function AddEntryForm({ className }: AddEntryFormProps) {
     'use server'
     const title = formData.get('entry') as string
     await createEntry({ title })
+    revalidatePath('/')
   }
 
   return (

@@ -1,11 +1,14 @@
 import AddEntryForm from '@/components/molecules/add-entry-form'
 import EntriesList from '@/components/molecules/entries-list'
+import { getAllEntries } from '@/services/ServiceEntries'
 
-export default function Home() {
+export default async function Home() {
+  const entries = await getAllEntries()
+
   return (
     <>
       <AddEntryForm />
-      <EntriesList />
+      <EntriesList entries={entries} />
     </>
   )
 }
