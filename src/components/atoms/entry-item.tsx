@@ -14,7 +14,7 @@ export default function EntryItem({ className, entry }: EntryItemProps) {
   const formattedDate = new Date(date).toLocaleDateString('fr-FR')
   return (
     <div
-      className={`bg-white text-foreground p-8 rounded-md text-left flex flex-col gap-2 ${className}`}
+      className={`bg-white/85 text-foreground p-8 rounded-md text-left flex flex-col gap-2 ${className}`}
     >
       <header className="flex justify-between items-center">
         <h3 className="typeface-entry-title text-amber-500">{title}</h3>
