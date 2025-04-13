@@ -1,5 +1,4 @@
 import { createEntry } from '@/services/ServiceEntries'
-import { revalidatePath } from 'next/cache'
 import Form from 'next/form'
 
 type AddEntryFormProps = {
@@ -12,7 +11,6 @@ export default function AddEntryForm({ className }: AddEntryFormProps) {
     'use server'
     const title = formData.get('entry') as string
     await createEntry({ title })
-    revalidatePath('/')
   }
 
   return (
@@ -28,7 +26,7 @@ export default function AddEntryForm({ className }: AddEntryFormProps) {
       />
       <button
         type="submit"
-        className="bg-white text-amber-500 font-[700] text-xl px-4 py-2 rounded-md ml-auto"
+        className="button-primary ml-auto"
       >
         Ajouter
       </button>

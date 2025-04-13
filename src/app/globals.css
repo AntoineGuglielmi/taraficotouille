@@ -29,3 +29,12 @@
   border-radius: var(--radius-md);
   width: 100%;
 }
+
+@utility button-primary {
+  padding: 0.5rem 1rem;
+  border-radius: var(--radius-md);
+  font-size: var(--text-base);
+  font-weight: 500;
+  background-color: var(--color-white);
+  color: var(--color-amber-500);
+}

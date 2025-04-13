@@ -1,9 +1,12 @@
+/* eslint-disable react/no-unescaped-entities */
 'use client'
 
 import { useState } from 'react'
 import { TypeEntryRefined } from '@/types/TypeEntryRefined'
 import useDebounce from '@/hooks/useDebounce'
 import useEffectAfterFirstRender from '@/hooks/useEffectAfterFirstRender'
+import { useRouter } from 'next/navigation'
+import { deleteEntryAction } from './actions'
 
 type EditEntryFormProps = {
   className?: string
@@ -15,8 +18,10 @@ export default function EditEntryForm({
   className,
   entry,
 }: EditEntryFormProps) {
+  const router = useRouter()
   const { id, title, definition, date } = entry
   const formattedDate = new Date(date).toLocaleDateString('fr-FR')
+  const [showMoreOption, setShowMoreOption] = useState(false)
 
   const [inputTitle, setInputTitle] = useState<string>(title)
   const [inputDefinition, setInputDefinition] = useState<string>(
@@ -42,6 +47,18 @@ export default function EditEntryForm({
     })
   }, [debouncedDefinition, id])
 
+  const handleDeleteButton = async (
+    event: React.MouseEvent<HTMLButtonElement>,
+  ) => {
+    event.preventDefault()
+    event.stopPropagation()
+    const confirmed = confirm('Êtes-vous sûr de vouloir désinventer ce mot ?')
+    if (confirmed) {
+      await deleteEntryAction({ id })
+      router.push('/')
+    }
+  }
+
   return (
     <form className={`flex flex-col gap-4 w-full ${className}`}>
       <input
@@ -61,6 +78,24 @@ export default function EditEntryForm({
         placeholder="Ça veut dire..."
         className="input-field bg-white text-foreground placeholder:text-foreground/75 field-sizing-content min-h-[80px]"
       />
+      {!showMoreOption && (
+        <button
+          className="text-white underline mr-auto font-[700]"
+          onClick={() => setShowMoreOption(!showMoreOption)}
+        >
+          Voir plus d'options
+        </button>
+      )}
+      {showMoreOption && (
+        <>
+          <button
+            className="button-primary ml-auto bg-violet-300 text-violet-900"
+            onClick={handleDeleteButton}
+          >
+            Désinventer
+          </button>
+        </>
+      )}
     </form>
   )
 }

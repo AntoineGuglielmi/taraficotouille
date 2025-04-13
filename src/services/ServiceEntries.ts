@@ -123,8 +123,8 @@ export const updateEntry = async ({
   definition: TypeEntryRefined['definition']
 }) => {
   const entry = {
-    ...(title ? { title } : {}),
-    ...(definition ? { definition } : {}),
+    ...(title !== undefined ? { title } : {}),
+    ...(definition !== undefined ? { definition } : {}),
   }
   console.log({
     id,
@@ -143,6 +143,20 @@ export const updateEntry = async ({
     return response
   } catch (error) {
     console.error('Error updating entry:', error)
+    throw error
+  }
+}
+
+export const deleteEntry = async ({ id }: { id: TypeEntryRefined['id'] }) => {
+  try {
+    const response = await databases.deleteDocument(
+      AW_DATABASE_ID!,
+      AW_COLLECTION_ENTRIES_ID!,
+      id,
+    )
+    return response
+  } catch (error) {
+    console.error('Error deleting entry:', error)
     throw error
   }
 }
