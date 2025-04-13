@@ -3,9 +3,9 @@ import { getEntryById } from '@/services/ServiceEntries'
 import Link from 'next/link'
 
 type IdPageProps = {
-  params: {
+  params: Promise<{
     id: string
-  }
+  }>
 }
 
 export default async function IdPage({ params }: IdPageProps) {

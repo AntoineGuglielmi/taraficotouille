@@ -30,7 +30,7 @@ export default function CookieCheckerClient({
       } catch {}
     }
     fetchUserType()
-  }, [])
+  }, [hideIf, showIf])
 
   if (!isAllowed) return null
 
