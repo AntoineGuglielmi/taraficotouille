@@ -9,6 +9,9 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
 
+    env:
+      AW_DATABASE_ID: ${{ secrets.AW_DATABASE_ID }} # Une clé API sécurisée
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
