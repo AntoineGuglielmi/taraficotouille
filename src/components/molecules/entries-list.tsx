@@ -37,8 +37,8 @@ export default function EntriesList({ className, entries }: EntriesListProps) {
       <input
         type="search"
         onChange={(event) => setSearch(event.target.value)}
-        className="bg-yellow-500 shadow-[0_0_1rem_0_rgba(0,0,0,0.75)] text-white text-2xl placeholder:text-white/75 px-4 py-2 rounded-md w-full font-cute"
-        placeholder="Chercher un mot ou une définition..."
+        className="input-field bg-yellow-500 text-white text-2xl placeholder:text-white/75 font-cute"
+        placeholder="Où il est mon jouet ?"
       />
       <ul className="w-full flex flex-col gap-4">
         {filteredEntries.map((entry) => (

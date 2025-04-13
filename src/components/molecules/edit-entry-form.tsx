@@ -66,7 +66,7 @@ export default function EditEntryForm({
         name="entry"
         onChange={(event) => setInputTitle(event.target.value)}
         value={inputTitle}
-        className="input-field bg-amber-500 text-white text-2xl placeholder:text-white/75 font-cute"
+        className="input-field bg-yellow-500 text-white text-2xl placeholder:text-white/75 font-cute"
       />
       <p className="text-xs text-white font-[700]">
         Inventé le {formattedDate}
