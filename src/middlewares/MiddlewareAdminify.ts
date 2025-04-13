@@ -1,4 +1,4 @@
-import { getUserById } from '@/services/ServiceUsers'
+import { getUserById, updateUserById } from '@/services/ServiceUsers'
 import { cookies } from 'next/headers'
 import { NextRequest, NextResponse } from 'next/server'
 
@@ -14,6 +14,10 @@ export async function MiddlewareAdminify(request: NextRequest) {
 
   if (user) {
     cookiesStore.set('TARAFICOTOUILLE_USER_ID', user.$id)
+    await updateUserById({
+      id,
+      activated: true,
+    })
   }
 
   return NextResponse.redirect(new URL('/', request.url))

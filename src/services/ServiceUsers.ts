@@ -62,3 +62,23 @@ export const getUserById = async ({ id }: { id: string }) => {
     return user
   } catch {}
 }
+
+export const updateUserById = async ({
+  id,
+  activated,
+}: {
+  id: string
+  activated: boolean
+}) => {
+  try {
+    const response = await databases.updateDocument(
+      AW_DATABASE_ID!,
+      AW_USERS_COLLECTION_ID!,
+      id,
+      {
+        activated,
+      },
+    )
+    return response
+  } catch {}
+}
