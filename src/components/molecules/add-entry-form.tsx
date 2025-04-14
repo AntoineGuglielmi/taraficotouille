@@ -11,6 +11,9 @@ export default function AddEntryForm({ className }: AddEntryFormProps) {
   const submitForm = async (formData: FormData) => {
     'use server'
     const title = formData.get('entry') as string
+    if (title === '') {
+      return
+    }
     await createEntry({ title })
     revalidatePath('/')
   }
