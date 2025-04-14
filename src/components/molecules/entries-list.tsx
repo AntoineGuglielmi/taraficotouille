@@ -38,7 +38,7 @@ export default function EntriesList({ className, entries }: EntriesListProps) {
         type="search"
         onChange={(event) => setSearch(event.target.value)}
         className="input-field bg-yellow-500 text-white text-2xl placeholder:text-white/75 font-cute"
-        placeholder="Où il est mon jouet ?"
+        placeholder="Fouiller dans le coffre à inventions..."
       />
       <ul className="w-full flex flex-col gap-4">
         {filteredEntries.map((entry) => (
