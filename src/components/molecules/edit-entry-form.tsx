@@ -1,27 +1,41 @@
 /* eslint-disable react/no-unescaped-entities */
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { TypeEntryRefined } from '@/types/TypeEntryRefined'
 import useDebounce from '@/hooks/useDebounce'
 import useEffectAfterFirstRender from '@/hooks/useEffectAfterFirstRender'
 import { useRouter } from 'next/navigation'
 import { deleteEntryAction } from './actions'
+import AudioRecorder from '../atoms/audio-recorder'
 
 type EditEntryFormProps = {
   className?: string
   children?: React.ReactNode
   entry: TypeEntryRefined
+  audios: Array<ArrayBuffer>
 }
 
 export default function EditEntryForm({
   className,
   entry,
+  audios,
 }: EditEntryFormProps) {
   const router = useRouter()
   const { id, title, definition, date } = entry
   const formattedDate = new Date(date).toLocaleDateString('fr-FR')
   const [showMoreOption, setShowMoreOption] = useState(false)
+  const [audiosURLS, setAudiosURLS] = useState<Array<string>>([])
+
+  useEffect(() => {
+    setAudiosURLS(
+      audios.map((audio) => {
+        const blob = new Blob([audio], { type: 'audio/webm' }) // adapte le type si besoin
+        const audioUrl = URL.createObjectURL(blob)
+        return audioUrl
+      }),
+    )
+  }, [audios])
 
   const [inputTitle, setInputTitle] = useState<string>(title)
   const [inputDefinition, setInputDefinition] = useState<string>(
@@ -78,6 +92,17 @@ export default function EditEntryForm({
         placeholder="Ça veut dire..."
         className="input-field bg-white text-foreground placeholder:text-foreground/75 field-sizing-content min-h-[80px]"
       />
+      {audiosURLS.map((audio, index) => {
+        return (
+          <audio
+            className="input-field bg-white"
+            controls
+            key={index}
+            src={audio}
+          ></audio>
+        )
+      })}
+      <AudioRecorder entryId={id} />
       {!showMoreOption && (
         <button
           className="text-white underline mr-auto font-[700]"

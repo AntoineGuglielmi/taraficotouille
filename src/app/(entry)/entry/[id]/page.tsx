@@ -1,4 +1,5 @@
 import EditEntryForm from '@/components/molecules/edit-entry-form'
+import { getAudiosBatch } from '@/services/ServiceAudioStorage'
 import { getEntryById } from '@/services/ServiceEntries'
 import Link from 'next/link'
 
@@ -11,6 +12,10 @@ type IdPageProps = {
 export default async function IdPage({ params }: IdPageProps) {
   const { id } = await params
   const entry = await getEntryById({ id })
+  const { audiosId } = entry
+  const audios = await getAudiosBatch({
+    audiosId,
+  })
 
   return (
     <section className="flex flex-col gap-4 w-full max-w-prose items-center justify-center">
@@ -20,7 +25,10 @@ export default async function IdPage({ params }: IdPageProps) {
       >
         Retour au dictionnaire
       </Link>
-      <EditEntryForm entry={entry} />
+      <EditEntryForm
+        entry={entry}
+        audios={audios}
+      />
     </section>
   )
 }

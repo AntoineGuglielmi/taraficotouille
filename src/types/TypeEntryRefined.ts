@@ -3,4 +3,5 @@ export type TypeEntryRefined = {
   title: string
   definition?: string
   date: string
+  audiosId: Array<string>
 }
