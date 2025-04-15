@@ -2,7 +2,7 @@
 import { TypeEntryRefined } from '@/types/TypeEntryRefined'
 import { Pencil } from 'lucide-react'
 import Link from 'next/link'
-import CookieChecker from './cookie-checker'
+import UserPermission from './user-permission'
 
 type EntryItemProps = {
   className?: string
@@ -19,12 +19,11 @@ export default function EntryItem({ className, entry }: EntryItemProps) {
     >
       <header className="flex justify-between items-center">
         <h3 className="typeface-entry-title text-amber-500">{title}</h3>
-
-        <CookieChecker showIf={['admin', 'writer']}>
+        <UserPermission showIf={['admin', 'writer']}>
           <Link href={`/entry/${id}`}>
             <Pencil />
           </Link>
-        </CookieChecker>
+        </UserPermission>
       </header>
       <p className="text-xs">Inventé le {formattedDate}</p>
       {definition && <p className="italic">"{definition}"</p>}

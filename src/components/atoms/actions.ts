@@ -6,7 +6,7 @@ import { getUserById } from '@/services/ServiceUsers'
 import { TypeEntryRefined } from '@/types/TypeEntryRefined'
 import { revalidatePath } from 'next/cache'
 
-export const getUserType = async ({
+export const getUserTypeAction = async ({
   id,
 }: {
   id: string
