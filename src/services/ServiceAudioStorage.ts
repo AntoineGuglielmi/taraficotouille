@@ -25,7 +25,15 @@ export const getAudiosBatch = async ({
   const audios = []
   for (const audioId of audiosId) {
     const audio = await storage.getFileView(AW_VOICE_ENTRY_BUCKET_ID!, audioId)
-    audios.push(audio)
+    audios.push({
+      audio,
+      audioId,
+    })
   }
   return audios
+}
+
+export const removeAudio = async ({ audioId }: { audioId: string }) => {
+  const response = await storage.deleteFile(AW_VOICE_ENTRY_BUCKET_ID!, audioId)
+  return response
 }

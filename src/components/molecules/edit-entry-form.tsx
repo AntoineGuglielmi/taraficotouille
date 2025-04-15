@@ -6,14 +6,18 @@ import { TypeEntryRefined } from '@/types/TypeEntryRefined'
 import useDebounce from '@/hooks/useDebounce'
 import useEffectAfterFirstRender from '@/hooks/useEffectAfterFirstRender'
 import { useRouter } from 'next/navigation'
-import { deleteEntryAction } from './actions'
+import { deleteEntryAction, removeAudioAction } from './actions'
 import AudioRecorder from '../atoms/audio-recorder'
+import { X } from 'lucide-react'
 
 type EditEntryFormProps = {
   className?: string
   children?: React.ReactNode
   entry: TypeEntryRefined
-  audios: Array<ArrayBuffer>
+  audios: Array<{
+    audio: ArrayBuffer
+    audioId: string
+  }>
 }
 
 export default function EditEntryForm({
@@ -25,14 +29,19 @@ export default function EditEntryForm({
   const { id, title, definition, date } = entry
   const formattedDate = new Date(date).toLocaleDateString('fr-FR')
   const [showMoreOption, setShowMoreOption] = useState(false)
-  const [audiosURLS, setAudiosURLS] = useState<Array<string>>([])
+  const [audiosURLS, setAudiosURLS] = useState<
+    Array<{
+      audioUrl: string
+      audioId: string
+    }>
+  >([])
 
   useEffect(() => {
     setAudiosURLS(
-      audios.map((audio) => {
+      audios.map(({ audio, audioId }) => {
         const blob = new Blob([audio], { type: 'audio/webm' }) // adapte le type si besoin
         const audioUrl = URL.createObjectURL(blob)
-        return audioUrl
+        return { audioUrl, audioId }
       }),
     )
   }, [audios])
@@ -73,6 +82,13 @@ export default function EditEntryForm({
     }
   }
 
+  const handleRemoveAudio = async ({ audioId }: { audioId: string }) => {
+    await removeAudioAction({
+      audioId,
+      entryId: id,
+    })
+  }
+
   return (
     <form className={`flex flex-col gap-4 w-full ${className}`}>
       <input
@@ -92,14 +108,24 @@ export default function EditEntryForm({
         placeholder="Ça veut dire..."
         className="input-field bg-white text-foreground placeholder:text-foreground/75 field-sizing-content min-h-[80px]"
       />
-      {audiosURLS.map((audio, index) => {
+      {audiosURLS.map(({ audioId, audioUrl }) => {
         return (
-          <audio
-            className="input-field bg-white"
-            controls
-            key={index}
-            src={audio}
-          ></audio>
+          <div
+            key={audioId}
+            className="grid grid-cols-[1fr_auto] gap-2"
+          >
+            <audio
+              className="input-field bg-white"
+              controls
+              src={audioUrl}
+            ></audio>
+            <div
+              className="button-primary cursor-pointer flex items-center justify-center"
+              onClick={() => handleRemoveAudio({ audioId })}
+            >
+              <X />
+            </div>
+          </div>
         )
       })}
       <AudioRecorder entryId={id} />

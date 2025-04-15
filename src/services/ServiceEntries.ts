@@ -159,3 +159,28 @@ export const addAudioIdToEntry = async ({
     audiosId: updatedAudiosId,
   })
 }
+
+export const removeAudioIdFromEntry = async ({
+  entryId,
+  audioId,
+}: {
+  entryId: TypeEntryRefined['id']
+  audioId: string
+}) => {
+  const currentAudiosId = (
+    await databases.getDocument(
+      AW_DATABASE_ID!,
+      AW_ENTRIES_COLLECTION_ID!,
+      entryId,
+    )
+  ).audiosId
+
+  const updatedAudiosId = currentAudiosId.filter(
+    (_audioId: string) => _audioId !== audioId,
+  )
+
+  await updateEntry({
+    id: entryId,
+    audiosId: updatedAudiosId,
+  })
+}
