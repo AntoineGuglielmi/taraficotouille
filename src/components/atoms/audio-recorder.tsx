@@ -54,7 +54,7 @@ export default function AudioRecorder({
         setMediaRecorder(recorder)
       })
     }
-  }, [])
+  }, [entryId])
 
   const startRecording = () => {
     if (mediaRecorder) {
