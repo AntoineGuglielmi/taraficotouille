@@ -7,4 +7,5 @@ export type TypeEntryRaw = {
   $collectionId: string
   title: string
   definition?: string
+  audiosId: Array<string>
 }

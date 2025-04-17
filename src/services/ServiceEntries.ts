@@ -96,14 +96,17 @@ export const updateEntry = async ({
   id,
   title,
   definition,
+  audiosId,
 }: {
   id: TypeEntryRefined['id']
-  title: TypeEntryRefined['title']
-  definition: TypeEntryRefined['definition']
+  title?: TypeEntryRefined['title']
+  definition?: TypeEntryRefined['definition']
+  audiosId?: TypeEntryRefined['audiosId']
 }) => {
   const entry = {
     ...(title !== undefined ? { title } : {}),
     ...(definition !== undefined ? { definition } : {}),
+    ...(audiosId !== undefined ? { audiosId } : {}),
   }
 
   try {
@@ -132,4 +135,52 @@ export const deleteEntry = async ({ id }: { id: TypeEntryRefined['id'] }) => {
     console.error('Error deleting entry:', error)
     throw error
   }
+}
+
+export const addAudioIdToEntry = async ({
+  entryId,
+  audioId,
+}: {
+  entryId: TypeEntryRefined['id']
+  audioId: string
+}) => {
+  const currentAudiosId = (
+    await databases.getDocument(
+      AW_DATABASE_ID!,
+      AW_ENTRIES_COLLECTION_ID!,
+      entryId,
+    )
+  ).audiosId
+
+  const updatedAudiosId = [...new Set([...currentAudiosId, audioId])]
+
+  await updateEntry({
+    id: entryId,
+    audiosId: updatedAudiosId,
+  })
+}
+
+export const removeAudioIdFromEntry = async ({
+  entryId,
+  audioId,
+}: {
+  entryId: TypeEntryRefined['id']
+  audioId: string
+}) => {
+  const currentAudiosId = (
+    await databases.getDocument(
+      AW_DATABASE_ID!,
+      AW_ENTRIES_COLLECTION_ID!,
+      entryId,
+    )
+  ).audiosId
+
+  const updatedAudiosId = currentAudiosId.filter(
+    (_audioId: string) => _audioId !== audioId,
+  )
+
+  await updateEntry({
+    id: entryId,
+    audiosId: updatedAudiosId,
+  })
 }

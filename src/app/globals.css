@@ -38,4 +38,5 @@
   font-weight: 500;
   background-color: var(--color-white);
   color: var(--color-amber-500);
+  cursor: pointer;
 }

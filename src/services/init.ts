@@ -1,4 +1,4 @@
-import { Client, Databases } from 'node-appwrite'
+import { Client, Databases, Storage } from 'node-appwrite'
 const client = new Client()
 
 const { AW_ENDPOINT, AW_PROJECT_ID, AW_SECRET_KEY } = process.env
@@ -9,3 +9,4 @@ client
   .setKey(AW_SECRET_KEY!)
 
 export const databases = new Databases(client)
+export const storage = new Storage(client)

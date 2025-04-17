@@ -2,6 +2,7 @@ import { Vibur, Nunito } from 'next/font/google'
 import './globals.css'
 import BgColor from '@/components/atoms/bg-color'
 import { Metadata } from 'next'
+import PermissionProvider from '@/components/atoms/permission-provider'
 
 const nunito = Nunito({
   variable: '--font-nunito',
@@ -31,7 +32,7 @@ export default function RootLayout({
         className={`${nunito.variable} ${vibur.variable} antialiased min-h-[100svh] px-4 pb-30 font-body relative`}
       >
         <BgColor />
-        {children}
+        <PermissionProvider>{children}</PermissionProvider>
       </body>
     </html>
   )

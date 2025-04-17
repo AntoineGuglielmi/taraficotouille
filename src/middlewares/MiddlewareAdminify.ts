@@ -13,7 +13,9 @@ export async function MiddlewareAdminify(request: NextRequest) {
   const user = await getUserById({ id })
 
   if (user) {
-    cookiesStore.set('TARAFICOTOUILLE_USER_ID', user.$id)
+    cookiesStore.set('TARAFICOTOUILLE_USER_ID', user.$id, {
+      expires: new Date(Date.now() + 365 /*nb d ejours*/ * 24 * 60 * 60 * 1000),
+    })
     await updateUserById({
       id,
       activated: true,
