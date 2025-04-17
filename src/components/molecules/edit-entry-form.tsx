@@ -55,20 +55,22 @@ export default function EditEntryForm({
   const debouncedDefinition = useDebounce(inputDefinition, 500)
 
   useEffectAfterFirstRender(() => {
+    console.log('useEffectAfterFirstRender title')
     fetch('/api/entries', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ title: debouncedTitle, id }),
     })
-  }, [debouncedTitle, id])
+  }, [debouncedTitle])
 
   useEffectAfterFirstRender(() => {
+    console.log('useEffectAfterFirstRender definition')
     fetch('/api/entries', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ definition: debouncedDefinition, id }),
     })
-  }, [debouncedDefinition, id])
+  }, [debouncedDefinition])
 
   const handleDeleteButton = async (
     event: React.MouseEvent<HTMLButtonElement>,

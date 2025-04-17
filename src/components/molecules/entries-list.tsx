@@ -10,9 +10,19 @@ type EntriesListProps = {
   className?: string
   children?: React.ReactNode
   entries: TypeEntryRefined[]
+  audios: Array<
+    Array<{
+      audio: ArrayBuffer
+      audioId: string
+    }>
+  >
 }
 
-export default function EntriesList({ className, entries }: EntriesListProps) {
+export default function EntriesList({
+  className,
+  entries,
+  audios,
+}: EntriesListProps) {
   // const [entries, setEntries] = useState<TypeEntryRefined[]>([])
   const [search, setSearch] = useState<string>('')
   const [filteredEntries, setFilteredEntries] =
@@ -41,9 +51,12 @@ export default function EntriesList({ className, entries }: EntriesListProps) {
         placeholder="Fouiller dans le coffre à inventions..."
       />
       <ul className="w-full flex flex-col gap-4">
-        {filteredEntries.map((entry) => (
+        {filteredEntries.map((entry, index) => (
           <li key={entry.id}>
-            <EntryItem entry={entry} />
+            <EntryItem
+              entry={entry}
+              audios={audios[index]}
+            />
           </li>
         ))}
       </ul>
