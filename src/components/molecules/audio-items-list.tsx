@@ -31,11 +31,13 @@ export default function AudioItemsList({
 
   useEffect(() => {
     setAudiosURLS(
-      audios.map(({ audio, audioId }) => {
+      audios
+        ? audios.map(({ audio, audioId }) => {
         const blob = new Blob([audio], { type: 'audio/webm' })
         const audioUrl = URL.createObjectURL(blob)
         return { audioUrl, audioId }
-      }),
+          })
+        : [],
     )
   }, [audios])
 
